@@ -1,0 +1,29 @@
+<ion-view view-title="Job Openings">
+  <ion-content style="height: 55px;" scroll="false">
+    <div class="list">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text"
+            ng-model="chatCtrl.searchTerm"
+            placeholder="Pipe Fitter...">
+        </label>
+        <button class="button button-small">
+          <i class="icon ion-search"></i>
+        </button>
+      </div>
+    </div>
+  </ion-content>
+  <ion-content style="margin-top: 52px;">
+    <ion-list>
+      <ion-item class="item-remove-animate item-icon-right item-icon-left"
+        ng-repeat="chat in chatCtrl.chats | filter: chatCtrl.searchTerm"
+        type="item-text-wrap"
+        href="#/tab/chats/{{chat.id}}">
+        <i class="icon {{chat.icon}}"></i>
+        <h2>{{chat.position}}</h2>
+        <p>{{chat.location}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
