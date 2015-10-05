@@ -21,8 +21,36 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('AccountCtrl', function($scope, $firebaseArray) {
+  var user = Ionic.User.current();
+  var base = new Firebase('https://slackfire.firebaseio.com');
+  var notifications;
+
+  $scope.geocodeZip = geocodeZip;
+  $scope.newNotification = {};
+
+  if(user.id){
+    var notificationsRef = base.child('/notifications');
+    $scope.notifications = $firebaseArray(notificationsRef);
+  }
+
+  function geocodeZip(){
+    var geocoder = new google.maps.Geocoder();
+    var data = Object.assign({}, $scope.newNotification);
+    $scope.newNotification = {};
+    geocoder.geocode({address: data.address},  function(results_array, status) { 
+      if(status === 'OK'){
+        var lat = results_array[0].geometry.location.lat();
+        var lng = results_array[0].geometry.location.lng();
+        if(user.id){
+          $scope.notifications.$add({
+            address: data.address,
+            uuid: user.id,
+            center: [lat, lng],
+            cat: data.cat
+          });
+        }
+      }
+    });
+  }
 });

@@ -1,9 +1,32 @@
 <ion-view view-title="Account">
-  <ion-content>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
+  <ion-content style="height: 280px;" scroll="false">
+    <form class="new-form" ng-submit="geocodeZip()">
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Address</span>
+          <input type="text" ng-model="newNotification.address" placeholder="Baton Rouge or 70817">
+        </label>
+        <ion-radio-fix ng-model="newNotification.cat" ng-value="1">Electrical</ion-radio-fix>
+        <ion-radio-fix ng-model="newNotification.cat" ng-value="2">Pipefitter</ion-radio-fix>
+      </div>
+      <div class="padding">
+        <button class="button button-block button-stable"
+          type="submit">
+          Save Notification
+        </button>
+      </div>
+    </form>
+  </ion-content>
+  <ion-content style="margin-top: 277px;">
+    <ion-list show-delete="true">
+      <ion-item class="item-remove-animate"
+        type="item-text-wrap"
+        ng-repeat="notification in notifications">
+        <ion-delete-button class="ion-minus-circled"
+          ng-click="notifications.$remove(notification)"></ion-delete-button>
+        <h2>{{notification.address}}</h2>
+        <p>{{notification.cat == 1 ? 'Electrical' : 'Pipefitter'}}</p>
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>

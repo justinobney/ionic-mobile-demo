@@ -1,6 +1,6 @@
 {
   "name": "ionic-mobile-demo",
-  "app_id": "",
+  "app_id": "63cff715",
   "gulpStartupTasks": [
     "sass",
     "watch"
